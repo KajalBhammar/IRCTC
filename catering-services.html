@@ -2797,6 +2797,18 @@
       font-family: "Noto Sans Devanagari", "Poppins", sans-serif; font-size: 14px; color: var(--cs-muted);
     }
     .cs-panel .fact b { font-size: 24px; color: var(--cs-blue); }
+    .cs-panel .panel-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 24px; padding: 12px 22px;
+      border-radius: 40px;
+      background: var(--cs-grad); color: #fff;
+      font-family: "Noto Sans Devanagari", "Poppins", sans-serif; font-size: 15px; font-weight: 600;
+      box-shadow: 0 8px 20px rgba(31, 111, 229, .25);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .cs-panel .panel-link i { transition: transform .2s; }
+    .cs-panel .panel-link:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(31, 111, 229, .35); }
+    .cs-panel .panel-link:hover i { transform: translateX(4px); }
     .cs-gallery { display: grid; grid-template-columns: 1.15fr .85fr; grid-template-rows: 1fr 1fr; gap: 14px; height: 380px; }
     .cs-gallery .cs-media { border-radius: 18px; }
     .cs-gallery .cs-media:first-child { grid-row: 1 / 3; }
@@ -3388,6 +3400,7 @@
             <span class="kicker">स्टैटिक कैटरिंग</span>
             <h3>सेल किचन</h3>
             <p>सेल किचन स्टेशनों पर स्थित समर्पित रसोई हैं, जो मानकीकृत गुणवत्ता बनाए रखते हुए ट्रेनों और स्टेशन कैटरिंग इकाइयों को आपूर्ति के लिए ताज़ा भोजन तैयार करती हैं।</p>
+            <a href="cell-kitchen.html" class="panel-link">सेल किचन के बारे में और जानें <i class="fa-solid fa-arrow-right-long"></i></a>
           </div>
           <div class="cs-gallery single">
             <div class="cs-media"><i class="fa-solid fa-kitchen-set"></i><img src="https://images.pexels.com/photos/15323383/pexels-photo-15323383.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="सेल किचन" onerror="this.remove()" loading="lazy"></div>
