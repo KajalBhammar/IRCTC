@@ -1,0 +1,3193 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRCTC – Home</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    /* =====================================================================
+       THEME – deep navy + ocean teal + saffron accent
+       1 design-px = var(--u)  (reference width 2172px) for header scaling
+       ===================================================================== */
+    :root {
+      --u: calc(100vw / 2172);
+
+      --navy-950: #061631;
+      --navy-900: #0a1f44;
+      --navy-800: #0d2b5e;
+      --navy-700: #123c80;
+      --blue-500: #1f6fe5;
+      --teal-500: #12b5b0;
+      --teal-400: #2fd0c6;
+      --teal-50: #e8f8f7;
+      --sky-50: #f2f7fd;
+      --amber: #f6a623;
+      --amber-dk: #e08a00;
+      --ink: #0f1f3d;
+      --muted: #5d6b83;
+      --line: #e3e9f2;
+
+      --grad-main: linear-gradient(135deg, var(--navy-800) 0%, var(--navy-700) 55%, #145aa8 100%);
+      --grad-teal: linear-gradient(135deg, var(--teal-500), var(--blue-500));
+      --grad-amber: linear-gradient(135deg, #ffbf47, var(--amber-dk));
+      --shadow-sm: 0 4px 14px rgba(10, 31, 68, .08);
+      --shadow-md: 0 14px 34px rgba(10, 31, 68, .14);
+      --radius: 18px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow-x: clip;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Sans Devanagari", "Poppins", sans-serif;
+      background: #fff;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    /* ================= TOP BAR (light theme) ================= */
+    /* .site-header { position: relative; z-index: 30; padding-bottom: calc(34 * var(--u)); background: #fff; } */
+    .site-header {
+      position: sticky;
+      top: 0;
+      /* JS below sets this so only the nav stays visible */
+      z-index: 100;
+      padding-bottom: calc(34 * var(--u));
+      background: #fff;
+      transition: box-shadow .3s ease;
+    }
+
+    .site-header.scrolled {
+      box-shadow: 0 10px 30px rgba(10, 31, 68, .18);
+    }
+
+    /* while a top-bar dropdown (e.g. language) is open, lift the top bar above the nav */
+    .topbar:has(.open) {
+      z-index: 40;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 20;
+      background: #f4f5f9;
+      color: var(--navy-800);
+      border-top: 3px solid #2b2b2b;
+      border-bottom: 1px solid rgba(255, 255, 255, .5);
+      backdrop-filter: blur(8px);
+      height: calc(74 * var(--u));
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 calc(58 * var(--u)) 0 calc(95 * var(--u));
+    }
+
+    .tb-left,
+    .tb-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .tb-link {
+      display: flex;
+      align-items: center;
+      gap: calc(16 * var(--u));
+      font-size: max(12px, calc(18 * var(--u)));
+      font-weight: 500;
+      white-space: nowrap;
+      color: var(--navy-800);
+      padding: 0 calc(20 * var(--u));
+      transition: color .2s;
+    }
+
+    .tb-link:first-child {
+      padding-left: 0;
+    }
+
+    .tb-link i {
+      font-size: max(14px, calc(26 * var(--u)));
+      color: var(--navy-800);
+      transition: color .2s;
+    }
+
+    .tb-link:hover,
+    .tb-link:hover i {
+      color: var(--blue-500);
+    }
+
+    .sep {
+      width: 1px;
+      height: calc(26 * var(--u));
+      min-height: 16px;
+      background: #c3cad6;
+    }
+
+    .sep.tall {
+      height: calc(44 * var(--u));
+      margin: 0 calc(30 * var(--u));
+      background: #9aa4b5;
+    }
+
+    .help {
+      display: flex;
+      align-items: center;
+      gap: calc(18 * var(--u));
+      font-size: max(12px, calc(19 * var(--u)));
+      font-weight: 500;
+      white-space: nowrap;
+      color: var(--navy-800);
+    }
+
+    .help .ring {
+      display: grid;
+      place-items: center;
+      background: none;
+      box-shadow: none;
+      color: var(--navy-800);
+      font-size: max(16px, calc(28 * var(--u)));
+    }
+
+    .help .ring i {
+      transform: scaleX(-1);
+    }
+
+    .socials {
+      display: flex;
+      align-items: center;
+      gap: calc(12 * var(--u));
+    }
+
+    .socials a {
+      width: max(26px, calc(38 * var(--u)));
+      height: max(26px, calc(38 * var(--u)));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: max(12px, calc(17 * var(--u)));
+      transition: transform .2s, background .2s;
+    }
+
+/* Logo container */
+.exchange .brand {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Common logo style */
+.exchange-logo {
+  width: 145px;
+  height: 80px;
+  object-fit: contain;
+
+  background: #ffffff;
+  padding: 12px 16px;
+  border-radius: 6px;
+
+  display: block;
+}
+
+/* BSE logo */
+.bse-logo {
+  width: 145px;
+  height: 80px;
+}
+
+/* NSE logo */
+.nse-logo {
+  width: 145px;
+  height: 80px;
+}
+
+    .socials a:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Top bar social icons: solid brand colours */
+    .topbar .socials a {
+      border: none;
+    }
+
+    .topbar .socials .fb {
+      background: #1877f2;
+    }
+
+    .topbar .socials .ig {
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    }
+
+    .topbar .socials .x {
+      background: #000;
+    }
+
+    .topbar .socials .yt {
+      background: #ff0000;
+    }
+
+    .topbar .socials .in {
+      background: #0a66c2;
+    }
+
+    /* Footer social icons keep the glass style */
+    .connect .socials a {
+      background: rgba(255, 255, 255, .1);
+      border: 1px solid rgba(255, 255, 255, .16);
+    }
+
+    .connect .socials .fb:hover {
+      background: #1877f2;
+    }
+
+    .connect .socials .ig:hover {
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    }
+
+    .connect .socials .x:hover {
+      background: #000;
+    }
+
+    .connect .socials .yt:hover {
+      background: #ff0000;
+    }
+
+    .connect .socials .in:hover {
+      background: #0a66c2;
+    }
+
+    .lang {
+      position: relative;
+      margin-left: calc(50 * var(--u));
+    }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: calc(16 * var(--u));
+      background: #fff;
+      border: none;
+      border-radius: 40px;
+      height: calc(54 * var(--u));
+      min-height: 32px;
+      padding: 0 calc(26 * var(--u));
+      font-family: "Poppins", sans-serif;
+      font-size: max(12px, calc(20 * var(--u)));
+      font-weight: 500;
+      color: var(--navy-800);
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 2px 10px rgba(13, 43, 94, .10);
+      transition: box-shadow .2s;
+    }
+
+    .lang-btn:hover {
+      box-shadow: 0 4px 14px rgba(13, 43, 94, .18);
+    }
+
+    .lang-btn .fa-globe {
+      font-size: max(15px, calc(26 * var(--u)));
+      color: var(--navy-800);
+    }
+
+    .lang-btn .fa-chevron-down {
+      font-size: max(9px, calc(13 * var(--u)));
+      color: var(--navy-800);
+    }
+
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 100%;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: var(--shadow-md);
+      padding: 6px;
+      display: none;
+      z-index: 100;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 9px 16px;
+      border-radius: 9px;
+      font-size: 15px;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .dropdown a:hover {
+      background: var(--teal-50);
+      color: var(--navy-700);
+    }
+
+    .open>.dropdown {
+      display: block;
+      animation: drop .18s ease;
+    }
+
+    @keyframes drop {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ================= BANNER (shorter) ================= */
+    .banner {
+      display: none;
+    }
+
+    /* ================= MAIN NAV ================= */
+    .nav-wrap {
+      position: relative;
+      z-index: 30;
+      /* above .topbar so the centre logo circle overlaps it */
+      padding: 0 calc(42 * var(--u));
+      margin-top: calc(14 * var(--u));
+      /* was -42 */
+    }
+
+    .main-nav {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr calc(190 * var(--u)) 1fr;
+      align-items: center;
+      height: calc(88 * var(--u));
+      /* background: var(--grad-main); */
+      border-radius: 999px;
+      /* box-shadow: 0 calc(16 * var(--u)) calc(34 * var(--u)) rgba(13, 43, 94, .28); */
+      /* frosted white layer keeps the artwork as a faint texture so the menu text stays readable */
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, .80) 0%, rgba(255, 255, 255, .90) 50%, rgba(255, 255, 255, .80) 100%),
+        url("images/header-bg.png") center 62% / cover no-repeat;
+      backdrop-filter: blur(14px) saturate(150%);
+      -webkit-backdrop-filter: blur(14px) saturate(150%);
+      box-shadow: 0 10px 30px rgba(13, 43, 94, .16), inset 0 1px 0 rgba(255, 255, 255, .9);
+      transition: background .3s ease;
+    }
+
+    .main-nav::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(13, 43, 94, .10);
+      pointer-events: none;
+    }
+
+    /* thin tricolour accent along the bottom edge */
+    .main-nav::before {
+      content: "";
+      position: absolute;
+      left: calc(120 * var(--u));
+      right: calc(120 * var(--u));
+      bottom: 0;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, transparent, #f58220 15%, #f58220 35%, #ffffff 45%, #ffffff 55%, #138a36 65%, #138a36 85%, transparent);
+      opacity: .85;
+      pointer-events: none;
+    }
+
+    .site-header.scrolled .main-nav {
+      background:
+        linear-gradient(rgba(255, 255, 255, .94), rgba(255, 255, 255, .94)),
+        url("images/header-bg.png") center 62% / cover no-repeat;
+    }
+
+    .nav-left,
+    .nav-right {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      min-width: 0;
+    }
+
+    .nav-right {
+      justify-content: flex-end;
+    }
+
+    .home-btn {
+      width: calc(108 * var(--u));
+      height: 100%;
+      background: var(--grad-teal);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: calc(36 * var(--u));
+      flex-shrink: 0;
+      box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .08);
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+    }
+
+    .menu li {
+      display: flex;
+      align-items: center;
+    }
+
+    .menu li+li::before {
+      content: "";
+      width: 1px;
+      height: calc(30 * var(--u));
+      background: rgba(13, 43, 94, .25);
+    }
+
+    .menu a {
+      position: relative;
+      color: var(--navy-800);
+      font-size: calc(20.5 * var(--u));
+      font-weight: 600;
+      white-space: nowrap;
+      transition: color .2s;
+    }
+
+    .menu a::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: calc(-12 * var(--u));
+      width: 0;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--amber);
+      transform: translateX(-50%);
+      transition: width .25s;
+    }
+
+    .menu a:hover {
+      color: var(--amber-dk);
+    }
+
+    .menu a:hover::after {
+      width: 60%;
+    }
+
+    .menu.left {
+      margin-left: calc(33 * var(--u));
+    }
+
+    .menu.left a {
+      padding: 0 calc(32 * var(--u));
+    }
+
+    .menu.left li:first-child a {
+      padding-left: 0;
+    }
+
+    .menu.left li:first-child a::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .menu.right a {
+      padding: 0 calc(29 * var(--u));
+    }
+
+    /* ----- "हमारा कारोबार" hover menu: 4 options in one line ----- */
+    .menu.left {
+      height: 100%;
+    }
+
+    .menu .has-mega {
+      position: relative;
+      align-self: stretch;
+    }
+
+    .menu .has-mega > a .caret {
+      font-size: 10px;
+      margin-left: 6px;
+      transition: transform .25s;
+    }
+
+    .menu .has-mega:hover > a .caret,
+    .menu .has-mega:focus-within > a .caret {
+      transform: rotate(180deg);
+    }
+
+    .biz-menu {
+      position: absolute;
+      top: calc(100% + 14px);
+      left: -16px;
+      display: flex;
+      align-items: stretch;
+      padding: 10px;
+      background: #fff;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 40px rgba(10, 31, 68, .16);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: opacity .22s ease, transform .22s ease, visibility .22s;
+      z-index: 50;
+    }
+
+    /* invisible bridge so the menu stays open while the mouse moves down to it */
+    .biz-menu::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -16px;
+      height: 16px;
+    }
+
+    /* small pointer arrow */
+    .biz-menu::after {
+      content: "";
+      position: absolute;
+      top: -7px;
+      left: 60px;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-left: 1px solid var(--line);
+      border-top: 1px solid var(--line);
+      transform: rotate(45deg);
+    }
+
+    .menu .has-mega:hover > .biz-menu,
+    .menu .has-mega:focus-within > .biz-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .menu .biz-menu a.biz-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 22px 12px 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--navy-800);
+      white-space: nowrap;
+      position: relative;
+      transition: background .2s, color .2s;
+    }
+
+    .menu .biz-menu a.biz-item::after {
+      display: none;
+    }
+
+    .menu .biz-menu a.biz-item + a.biz-item::before {
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: 14px;
+      bottom: 14px;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .biz-ic {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      color: var(--navy-700);
+      background: var(--sky-50);
+      border: 1px solid var(--line);
+      transition: background .2s, color .2s, border-color .2s;
+    }
+
+    .menu .biz-menu a.biz-item:hover {
+      background: var(--sky-50);
+      color: var(--amber-dk);
+    }
+
+    .menu .biz-menu a.biz-item:hover .biz-ic {
+      background: var(--grad-teal);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .logo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -46%);
+      width: calc(150 * var(--u));
+      height: calc(150 * var(--u));
+      background: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 calc(6 * var(--u)) rgba(18, 181, 176, .35), 0 calc(8 * var(--u)) calc(22 * var(--u)) rgba(0, 0, 0, .18);
+      z-index: 2;
+      transition: transform .3s ease;
+    }
+
+    .logo img {
+      width: calc(80 * var(--u));
+      height: auto;
+      display: block;
+    }
+
+    /* when the header is stuck, shrink the circle so it fits inside the bar instead of being cut off */
+    .site-header.scrolled .logo {
+      transform: translate(-50%, -50%) scale(.72);
+    }
+
+    .login {
+      position: relative;
+      margin-right: calc(20 * var(--u));
+      flex-shrink: 0;
+    }
+
+    .login-btn {
+      display: flex;
+      align-items: center;
+      gap: calc(14 * var(--u));
+      background: var(--grad-amber);
+      border: none;
+      border-radius: 999px;
+      height: calc(62 * var(--u));
+      padding: 0 calc(26 * var(--u)) 0 calc(28 * var(--u));
+      font-family: "Noto Sans Devanagari", sans-serif;
+      font-size: calc(20.5 * var(--u));
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(224, 138, 0, .35);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(224, 138, 0, .45);
+    }
+
+    .login-btn .fa-user {
+      font-size: calc(26 * var(--u));
+    }
+
+    .login-btn .fa-chevron-down {
+      font-size: calc(14 * var(--u));
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    /* ================= HERO SLIDER ================= */
+    .hero {
+      position: relative;
+      width: auto;
+      /* was 100% */
+      margin: 30px 9.2vw 40px 7.8vw;
+      /* top, right (room for quick links), bottom, left */
+      aspect-ratio: 1588 / 541;
+      /* card proportion from your screenshot */
+      min-height: 200px;
+      overflow: hidden;
+      border-radius: 24px;
+      /* rounded card corners */
+      background: var(--sky-50);
+      box-shadow: 0 18px 40px rgba(10, 31, 68, .14), 0 2px 6px rgba(10, 31, 68, .06);
+      isolation: isolate;
+      /* keeps corners rounded while sliding */
+    }
+
+    .slides {
+      display: flex;
+      height: 100%;
+      transition: transform .8s cubic-bezier(.65, 0, .35, 1);
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      height: 100%;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .85);
+      backdrop-filter: blur(6px);
+      border: none;
+      box-shadow: var(--shadow-sm);
+      color: var(--navy-800);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: background .2s, color .2s;
+    }
+
+    .hero-arrow:hover {
+      background: var(--navy-800);
+      color: #fff;
+    }
+
+    .hero-arrow.prev {
+      left: 20px;
+    }
+
+    .hero-arrow.next {
+      right: 20px;
+    }
+
+    .hero-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 6%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 20px;
+      background: rgba(10, 31, 68, .35);
+      backdrop-filter: blur(6px);
+      z-index: 5;
+    }
+
+    .hero-dots button {
+      width: 10px;
+      height: 10px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .6);
+      cursor: pointer;
+      transition: width .3s, background .3s;
+    }
+
+    .hero-dots button.active {
+      width: 30px;
+      background: var(--amber);
+    }
+
+    /* Quick links – fixed right */
+    .quick-links {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 84px;
+      background: linear-gradient(180deg, var(--teal-500), var(--navy-700));
+      border-radius: 22px 0 0 22px;
+      overflow: hidden;
+      z-index: 60;
+      box-shadow: -4px 8px 24px rgba(10, 31, 68, .25);
+    }
+
+    .quick-links a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 13px 6px 12px;
+      color: #fff;
+      font-size: 12.5px;
+      font-weight: 600;
+      line-height: 1.15;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, .18);
+      transition: background .2s;
+    }
+
+    .quick-links a:last-child {
+      border-bottom: none;
+    }
+
+    .quick-links a:hover {
+      background: rgba(255, 255, 255, .14);
+    }
+
+    .quick-links i {
+      font-size: 22px;
+    }
+
+    /* ================= TABLET / MOBILE (header) ================= */
+    @media (max-width: 1100px) {
+      .topbar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 16px;
+        height: auto;
+        padding: 10px 14px;
+      }
+
+      .tb-left,
+      .tb-right {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .sep.tall {
+        display: none;
+      }
+
+      .lang {
+        margin-left: 8px;
+      }
+
+      .hero {
+        margin: 20px 70px 24px 16px;
+        border-radius: 18px;
+      }
+
+      .hero-arrow.next {
+        right: 10px;
+      }
+
+      /* was 66px */
+      /* .banner { height: 56px; }   was 100px */
+      .nav-wrap {
+        padding: 0 12px;
+        margin-top: 10px;
+      }
+
+      .main-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        height: auto;
+        min-height: 60px;
+        border-radius: 30px;
+      }
+
+      .nav-left,
+      .nav-right {
+        height: 60px;
+      }
+
+      .nav-left .menu,
+      .nav-right .menu {
+        display: none;
+      }
+
+      .home-btn {
+        width: 70px;
+        height: 60px;
+        font-size: 22px;
+      }
+
+      .logo {
+        width: 84px;
+        height: 84px;
+        top: 30px;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 0 4px rgba(18, 181, 176, .35), 0 6px 16px rgba(0, 0, 0, .18);
+      }
+
+      .logo img {
+        width: 46px;
+      }
+
+      .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--navy-800);
+        font-size: 22px;
+        padding: 0 14px;
+        cursor: pointer;
+      }
+
+      .login {
+        margin-right: 8px;
+      }
+
+      .login-btn {
+        height: 42px;
+        padding: 0 14px;
+        gap: 8px;
+        font-size: 15px;
+      }
+
+      .login-btn .fa-user {
+        font-size: 17px;
+      }
+
+      .login-btn span {
+        display: none;
+      }
+
+      .login-btn .fa-chevron-down {
+        font-size: 11px;
+      }
+
+      .mobile-menu {
+        display: none;
+        width: 100%;
+        padding: 4px 0 14px;
+      }
+
+      .main-nav.mobile-open .mobile-menu {
+        display: block;
+      }
+
+      .mobile-menu a {
+        display: block;
+        color: var(--navy-800);
+        font-size: 16px;
+        padding: 11px 26px;
+        border-top: 1px solid rgba(13, 43, 94, .12);
+        background: rgba(255, 255, 255, .7);
+      }
+
+      .hero-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+      }
+
+      .hero-arrow.prev {
+        left: 10px;
+      }
+
+      .hero-arrow.next {
+        right: 66px;
+      }
+
+      .quick-links {
+        width: 58px;
+        border-radius: 14px 0 0 14px;
+      }
+
+      .quick-links a {
+        font-size: 10px;
+        padding: 8px 4px;
+        gap: 4px;
+      }
+
+      .quick-links i {
+        font-size: 17px;
+      }
+    }
+
+    @media (min-width: 1101px) {
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+
+    /* =====================================================================
+       PAGE SECTIONS
+       ===================================================================== */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      color: var(--teal-500);
+      background: var(--teal-50);
+      padding: 6px 16px;
+      border-radius: 30px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .sec-title {
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--navy-800);
+      line-height: 1.25;
+      margin-top: 14px;
+    }
+
+    .sec-title .hl {
+      background: linear-gradient(90deg, var(--teal-500), var(--blue-500));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .sec-sub {
+      font-size: 17px;
+      color: var(--muted);
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    .sec-head.center {
+      text-align: center;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: 40px;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: transform .2s, box-shadow .2s, background .2s, color .2s;
+      white-space: nowrap;
+    }
+
+    .btn i {
+      transition: transform .2s;
+    }
+
+    .btn:hover i {
+      transform: translateX(4px);
+    }
+
+    .btn-primary {
+      background: var(--grad-teal);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(18, 181, 176, .3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(18, 181, 176, .4);
+    }
+
+    .btn-ghost {
+      border: 1.5px solid var(--navy-700);
+      color: var(--navy-700);
+    }
+
+    .btn-ghost:hover {
+      background: var(--navy-700);
+      color: #fff;
+    }
+
+    .btn-light {
+      border: 1.5px solid rgba(255, 255, 255, .7);
+      color: #fff;
+    }
+
+    .btn-light:hover {
+      background: #fff;
+      color: var(--navy-800);
+    }
+
+    .btn-amber {
+      background: var(--grad-amber);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(224, 138, 0, .3);
+    }
+
+    .btn-amber:hover {
+      transform: translateY(-2px);
+    }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      margin-top: 36px;
+    }
+
+    .slider-dots button {
+      width: 10px;
+      height: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #c9d3e1;
+      cursor: pointer;
+      transition: width .3s, background .3s;
+    }
+
+    .slider-dots button.active {
+      width: 30px;
+      background: var(--teal-500);
+    }
+
+    /* ---------- 1. SERVICES ---------- */
+    .services {
+      padding: 80px 0 90px;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(18, 181, 176, .08), transparent 40%),
+        radial-gradient(circle at 100% 100%, rgba(31, 111, 229, .07), transparent 40%);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 48px;
+    }
+
+    .service-card {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .service-card .media {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+    }
+
+    .service-card .media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s;
+    }
+
+    .service-card:hover .media img {
+      transform: scale(1.08);
+    }
+
+    .service-card .media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 45%, rgba(10, 31, 68, .55));
+    }
+
+    .service-card .icon {
+      position: relative;
+      align-self: flex-start;
+      margin: -30px 0 0 24px;
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: var(--grad-teal);
+      color: #fff;
+      font-size: 24px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 22px rgba(18, 181, 176, .4);
+      border: 3px solid #fff;
+      z-index: 2;
+    }
+
+    .service-card .body {
+      padding: 16px 26px 26px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .service-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy-800);
+      margin-bottom: 10px;
+    }
+
+    .service-card p {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .service-card .more {
+      margin-top: 20px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--teal-500);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .service-card .more i {
+      transition: transform .2s;
+    }
+
+    .service-card:hover .more i {
+      transform: translateX(5px);
+    }
+
+    /* ---------- 2. ABOUT ---------- */
+    .about {
+      position: relative;
+      background: var(--sky-50);
+      padding: 100px 0;
+      overflow: hidden;
+    }
+
+    .about::before {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      right: -160px;
+      top: -160px;
+      background: radial-gradient(circle, rgba(18, 181, 176, .15), transparent 70%);
+    }
+
+    .about .container {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .about p.lead {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #334260;
+      margin: 22px 0 30px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 34px;
+    }
+
+    .stat {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px 16px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat b {
+      display: block;
+      font-family: "Poppins", sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--navy-700);
+    }
+
+    .stat span {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-visual .main-img {
+      width: 100%;
+      aspect-ratio: 5 / 4;
+      object-fit: cover;
+      display: block;
+      border-radius: 26px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .about-visual .badge {
+      position: absolute;
+      left: -26px;
+      bottom: 30px;
+      background: var(--grad-main);
+      color: #fff;
+      border-radius: 18px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .about-visual .badge i {
+      font-size: 30px;
+      color: var(--amber);
+    }
+
+    .about-visual .badge b {
+      display: block;
+      font-size: 18px;
+    }
+
+    .about-visual .badge span {
+      font-size: 13px;
+      opacity: .85;
+    }
+
+    .about-visual .frame {
+      position: absolute;
+      inset: 22px -22px -22px 22px;
+      border: 2px dashed rgba(18, 181, 176, .45);
+      border-radius: 26px;
+      z-index: -1;
+    }
+
+    /* ---------- 3. NEWS ---------- */
+    .news {
+      padding: 100px 0 80px;
+    }
+
+    .news-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+    }
+
+    .carousel {
+      overflow: hidden;
+      margin-top: 44px;
+      padding: 10px;
+      margin-left: -10px;
+      margin-right: -10px;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 28px;
+      transition: transform .6s ease;
+    }
+
+    .news-card {
+      flex: 0 0 calc((100% - 56px) / 3);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow .3s, transform .3s;
+    }
+
+    .news-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .news-card .media {
+      position: relative;
+      overflow: hidden;
+      height: 220px;
+    }
+
+    .news-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s;
+    }
+
+    .news-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .news-card .tag {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      background: rgba(255, 255, 255, .92);
+      color: var(--navy-700);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    .news-card .body {
+      padding: 20px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .news-card h3 {
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.45;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 55px;
+    }
+
+    .news-card .read {
+      margin-top: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--teal-500);
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* ---------- 4. INVESTOR CORNER ---------- */
+    .invest {
+      position: relative;
+      background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 60%, #0f4a8a 100%);
+      color: #fff;
+      padding: 100px 0;
+      overflow: hidden;
+    }
+
+    .invest::before,
+    .invest::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .invest::before {
+      width: 460px;
+      height: 460px;
+      left: -140px;
+      bottom: -200px;
+      background: radial-gradient(circle, rgba(18, 181, 176, .3), transparent 70%);
+    }
+
+    .invest::after {
+      width: 380px;
+      height: 380px;
+      right: -100px;
+      top: -120px;
+      background: radial-gradient(circle, rgba(246, 166, 35, .18), transparent 70%);
+    }
+
+    .invest .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .invest .eyebrow {
+      background: rgba(255, 255, 255, .1);
+      color: var(--teal-400);
+    }
+
+    .invest .sec-title {
+      color: #fff;
+    }
+
+    .invest .sec-sub {
+      color: #b9c8e2;
+    }
+
+    .invest-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 26px;
+      margin-top: 50px;
+      align-items: stretch;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 22px;
+      backdrop-filter: blur(8px);
+      padding: 28px;
+    }
+
+    .invest-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .invest-col h3 {
+      font-family: "Poppins", sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .invest-col h3 i {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--grad-teal);
+      font-size: 18px;
+    }
+
+    .notice {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .05);
+      margin-bottom: 12px;
+      transition: background .2s;
+    }
+
+    .notice:hover {
+      background: rgba(255, 255, 255, .1);
+    }
+
+    .notice .date {
+      flex: 0 0 auto;
+      min-width: 58px;
+      text-align: center;
+      background: var(--grad-amber);
+      border-radius: 12px;
+      padding: 6px 8px;
+      font-family: "Poppins", sans-serif;
+      line-height: 1.1;
+    }
+
+    .notice .date b {
+      display: block;
+      font-size: 20px;
+    }
+
+    .notice .date small {
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .notice strong {
+      display: block;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .notice span {
+      font-size: 14px;
+      color: #b9c8e2;
+    }
+
+    .notice .doc {
+      font-size: 34px;
+      color: var(--teal-400);
+      width: 58px;
+      text-align: center;
+    }
+
+    .invest-col .btn {
+      margin-top: auto;
+      align-self: flex-start;
+      padding: 10px 22px;
+      font-size: 15px;
+    }
+
+    .invest-col .spacer {
+      height: 12px;
+    }
+
+    .exchanges {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .exchange {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      align-items: center;
+      min-height: 150px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      background: linear-gradient(135deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04));
+      transition: transform .25s, border-color .25s;
+    }
+
+    .exchange:hover {
+      transform: translateY(-3px);
+      border-color: var(--teal-400);
+    }
+
+    .exchange .label {
+      font-family: "Poppins", sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      padding-left: 26px;
+    }
+
+    .exchange .label small {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: #b9c8e2;
+      margin-top: 4px;
+    }
+
+    .exchange .divider {
+      height: 70px;
+      background: rgba(255, 255, 255, .2);
+    }
+
+    .exchange .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bse-logo {
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 40px;
+      letter-spacing: 1px;
+      position: relative;
+      line-height: 1;
+    }
+
+    .bse-logo i {
+      position: absolute;
+      top: -24px;
+      right: -24px;
+      color: var(--amber);
+      font-size: 30px;
+      transform: rotate(-12deg);
+    }
+
+    .bse-logo small {
+      display: block;
+      font-size: 8px;
+      font-weight: 400;
+      letter-spacing: .3px;
+      margin-top: 2px;
+    }
+
+    .nse-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+    }
+
+    .nse-logo .mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: conic-gradient(#f05a28 0 25%, #fff 0 30%, #f7a21b 0 55%, #fff 0 60%, #e2231a 0 80%, #fff 0 85%, #f05a28 0);
+    }
+
+    /* ---------- 5. TESTIMONIALS ---------- */
+    .testimonials {
+      padding: 100px 0;
+      background: linear-gradient(180deg, #fff, var(--sky-50));
+    }
+
+    .testimonials .carousel {
+      margin-top: 40px;
+      padding: 16px;
+      margin-left: -16px;
+      margin-right: -16px;
+    }
+
+    .testimonials .carousel-track {
+      gap: 28px;
+    }
+
+    .t-card {
+      position: relative;
+      flex: 0 0 calc((100% - 56px) / 3);
+      background: #fff;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+      padding: 30px 28px 26px;
+      display: flex;
+      flex-direction: column;
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .t-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .t-card::before {
+      content: "";
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      top: 0;
+      height: 4px;
+      border-radius: 0 0 4px 4px;
+      background: var(--grad-teal);
+    }
+
+    .t-card .q-icon {
+      position: absolute;
+      right: 24px;
+      top: 22px;
+      font-size: 40px;
+      color: var(--teal-50);
+    }
+
+    .t-card .stars {
+      color: var(--amber);
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    .t-card p {
+      font-family: "Poppins", sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #3a4864;
+      margin-top: 14px;
+      flex: 1;
+      min-height: 130px;
+    }
+
+    .t-card .person {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .t-card .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--grad-main);
+      color: #fff;
+      font-family: "Poppins", sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .t-card h4 {
+      font-family: "Poppins", sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .t-card .role {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ---------- 6. CAREERS ---------- */
+    .careers {
+      padding: 40px 0 100px;
+    }
+
+    .careers-box {
+      position: relative;
+      background: linear-gradient(120deg, var(--teal-50) 0%, #e6f0fd 100%);
+      border-radius: 32px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 540px;
+      gap: 40px;
+      align-items: center;
+      padding: 50px 50px 50px 60px;
+    }
+
+    .careers-box::before {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      left: -100px;
+      bottom: -140px;
+      background: radial-gradient(circle, rgba(246, 166, 35, .18), transparent 70%);
+    }
+
+    .careers-text {
+      position: relative;
+    }
+
+    .careers .eyebrow {
+      background: #fff;
+    }
+
+    .careers .sec-sub {
+      margin: 14px 0 28px;
+    }
+
+    .careers .perks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .careers .perks span {
+      background: #fff;
+      border-radius: 30px;
+      padding: 8px 16px;
+      font-size: 14px;
+      color: var(--navy-700);
+      font-weight: 500;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .careers .perks i {
+      color: var(--teal-500);
+      margin-right: 6px;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      height: 380px;
+    }
+
+    .photo-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .photo-col img {
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 16px;
+      min-height: 0;
+      transition: transform .4s;
+    }
+
+    .photo-col img:hover {
+      transform: scale(1.03);
+    }
+
+    .photo-col.c1 img:nth-child(1) {
+      flex: 0 0 140px;
+    }
+
+    .photo-col.c1 img:nth-child(2) {
+      flex: 1;
+    }
+
+    .photo-col.c2 {
+      padding-top: 30px;
+    }
+
+    .photo-col.c2 img {
+      flex: 1;
+    }
+
+    .photo-col.c3 img:nth-child(1) {
+      flex: 0 0 230px;
+    }
+
+    .photo-col.c3 img:nth-child(2) {
+      flex: 1;
+    }
+
+    /* ---------- 7. PARTNER LOGOS ---------- */
+    .partners {
+      padding: 10px 0 80px;
+    }
+
+    .partners .label {
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 26px;
+    }
+
+    .logo-row {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 18px;
+      align-items: center;
+    }
+
+    .logo-row a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 84px;
+      padding: 8px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      transition: box-shadow .25s, transform .25s;
+    }
+
+    .logo-row img {
+      max-width: 100%;
+      max-height: 60px;
+      object-fit: contain;
+      filter: grayscale(1);
+      opacity: .75;
+      transition: filter .25s, opacity .25s;
+    }
+
+    .logo-row a:hover {
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-3px);
+    }
+
+    .logo-row a:hover img {
+      filter: none;
+      opacity: 1;
+    }
+
+    /* ---------- 8. CAUTION ---------- */
+    .caution {
+      padding: 0 0 80px;
+    }
+
+    .caution-box {
+      display: flex;
+      gap: 26px;
+      align-items: flex-start;
+      background: linear-gradient(90deg, #fff4f2, #fff9ef);
+      border: 1px solid #f9d6cf;
+      border-left: 6px solid #e5322d;
+      border-radius: 20px;
+      padding: 28px 32px;
+    }
+
+    .caution-icon {
+      flex: 0 0 64px;
+      height: 64px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: #e5322d;
+      color: #fff;
+      font-size: 28px;
+      box-shadow: 0 10px 22px rgba(229, 50, 45, .3);
+    }
+
+    .caution h3 {
+      font-family: "Poppins", sans-serif;
+      color: #c81e19;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .caution p {
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: #3d3d3d;
+    }
+
+    .caution p+p {
+      margin-top: 10px;
+    }
+
+    .caution .hotline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      background: #fff;
+      border: 1px solid #f3c2b9;
+      border-radius: 30px;
+      padding: 7px 16px;
+      font-weight: 700;
+      color: #c81e19;
+      font-size: 15px;
+    }
+
+    /* ---------- 9. CONNECT ---------- */
+    .connect {
+      background: var(--grad-main);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .connect::before {
+      content: "";
+      position: absolute;
+      right: -120px;
+      top: -160px;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(47, 208, 198, .25), transparent 70%);
+    }
+
+    .connect .container {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .connect-col {
+      padding: 56px 0;
+    }
+
+    .connect-col.left {
+      padding-right: 50px;
+      border-right: 1px solid rgba(255, 255, 255, .18);
+    }
+
+    .connect-col.right {
+      padding-left: 60px;
+    }
+
+    .connect h3 {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .connect p {
+      font-size: 17px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      color: #d3e0f5;
+    }
+
+    .connect .socials {
+      gap: 12px;
+    }
+
+    .connect .socials a {
+      width: 44px;
+      height: 44px;
+      font-size: 18px;
+    }
+
+    /* ---------- 10. BOTTOM FOOTER ---------- */
+    .bottom-footer {
+      position: relative;
+      overflow: hidden;
+      color: #b9c8e2;
+      background:
+        linear-gradient(90deg, var(--navy-950) 0%, var(--navy-950) 40%, rgba(6, 22, 49, .55) 70%, rgba(6, 22, 49, .25) 100%),
+        url("images/footer.png") right bottom / cover no-repeat,
+        var(--navy-950);
+    }
+
+    .bottom-footer .container {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-left {
+      padding: 60px 0 36px;
+    }
+
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      justify-content: start;
+      column-gap: 46px;
+      row-gap: 12px;
+    }
+
+    .footer-links a {
+      font-size: 14.5px;
+      color: #c9d6ec;
+      transition: color .2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--teal-400);
+    }
+
+    .counter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .counter .label {
+      font-size: 13px;
+    }
+
+    .counter .bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 30px;
+    }
+
+    .counter .bars span {
+      width: 7px;
+      border-radius: 2px;
+    }
+
+    .counter .bars span:nth-child(1) {
+      height: 14px;
+      background: var(--amber);
+    }
+
+    .counter .bars span:nth-child(2) {
+      height: 22px;
+      background: var(--teal-400);
+    }
+
+    .counter .bars span:nth-child(3) {
+      height: 30px;
+      background: var(--blue-500);
+    }
+
+    .counter .digits {
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .15);
+      color: #fff;
+      font-family: "Courier New", monospace;
+      font-weight: 700;
+      font-size: 22px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      letter-spacing: 2px;
+    }
+
+    .copyright {
+      margin-top: 30px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, .12);
+      font-family: "Poppins", sans-serif;
+      font-size: 13px;
+      color: #8ea2c4;
+    }
+
+    .footer-train {
+      display: none;
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1180px) {
+      .logo-row {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .careers-box {
+        grid-template-columns: 1fr;
+        padding: 40px;
+      }
+
+      .bottom-footer .container {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-train {
+        display: none;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .sec-title {
+        font-size: 32px;
+      }
+
+      .service-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .about .container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+      }
+
+      .about-visual .badge {
+        left: 12px;
+      }
+
+      .news-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .news-card {
+        flex-basis: calc((100% - 28px) / 2);
+      }
+
+      .invest-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .t-card {
+        flex-basis: calc((100% - 28px) / 2);
+      }
+
+      .connect .container {
+        grid-template-columns: 1fr;
+      }
+
+      .connect-col.left {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, .18);
+        padding: 40px 0;
+      }
+
+      .connect-col.right {
+        padding: 40px 0;
+      }
+
+      .footer-links {
+        grid-template-columns: repeat(2, auto);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 0 16px;
+      }
+
+      .services,
+      .about,
+      .news,
+      .invest,
+      .testimonials {
+        padding: 64px 0;
+      }
+
+      .sec-title {
+        font-size: 27px;
+      }
+
+      .sec-sub {
+        font-size: 15px;
+      }
+
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+      }
+
+      .stat {
+        padding: 12px 10px;
+      }
+
+      .stat b {
+        font-size: 20px;
+      }
+
+      .stat span {
+        font-size: 12px;
+      }
+
+      .news-card,
+      .t-card {
+        flex-basis: 100%;
+      }
+
+      .logo-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .careers-box {
+        padding: 30px 20px;
+        border-radius: 22px;
+      }
+
+      .photo-grid {
+        height: 280px;
+        gap: 8px;
+      }
+
+      .photo-col {
+        gap: 8px;
+      }
+
+      .photo-col.c1 img:nth-child(1) {
+        flex-basis: 100px;
+      }
+
+      .photo-col.c3 img:nth-child(1) {
+        flex-basis: 160px;
+      }
+
+      .exchange .label {
+        font-size: 17px;
+        padding-left: 18px;
+      }
+
+      .bse-logo {
+        font-size: 30px;
+      }
+
+      .nse-logo {
+        font-size: 26px;
+      }
+
+      .caution-box {
+        flex-direction: column;
+        padding: 22px 20px;
+      }
+
+      .glass {
+        padding: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="topbar">
+      <div class="tb-left">
+        <a href="#" class="tb-link"><i class="fa-solid fa-user"></i>सदस्य</a>
+        <span class="sep"></span>
+        <a href="#" class="tb-link"><i class="fa-solid fa-user-group"></i>ऑनलाईन शिकायत पंजीकरण</a>
+        <span class="sep"></span>
+        <a href="#" class="tb-link"><i class="fa-solid fa-message"></i>शिकायत</a>
+      </div>
+
+      <div class="tb-right">
+        <div class="help">
+          <span class="ring"><i class="fa-solid fa-phone"></i></span>
+          <span>मदद चाहिए ? 139</span>
+        </div>
+        <span class="sep tall"></span>
+        <div class="socials">
+          <a href="#" class="fb" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="ig" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="x" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="yt" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" class="in" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <div class="lang" data-dropdown>
+          <button class="lang-btn" type="button">
+            <i class="fa-solid fa-globe"></i><span>English</span><i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <ul class="dropdown">
+            <li><a href="#">English</a></li>
+            <li><a href="#">हिन्दी</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BANNER (same image, shorter) ===== -->
+    <div class="banner"></div>
+
+    <!-- ===== MAIN NAV ===== -->
+    <div class="nav-wrap">
+      <nav class="main-nav" id="mainNav">
+        <div class="nav-left">
+          <a href="#" class="home-btn" aria-label="Home"><i class="fa-solid fa-house"></i></a>
+          <ul class="menu left">
+            <li><a href="#">आईआरसीटीसी के बारे में</a></li>
+            <li class="has-mega">
+              <a href="#" aria-haspopup="true">हमारा कारोबार <i class="fa-solid fa-chevron-down caret"></i></a>
+              <div class="biz-menu" role="menu">
+                <a href="catering-services.html" class="biz-item" role="menuitem">
+                  <span class="biz-ic"><i class="fa-solid fa-bell-concierge"></i></span>
+                  <span class="biz-txt">कैटरिंग सेवाएं</span>
+                </a>
+                <a href="#" class="biz-item" role="menuitem">
+                  <span class="biz-ic"><i class="fa-solid fa-ticket"></i></span>
+                  <span class="biz-txt">इंटरनेट टिकट</span>
+                </a>
+                <a href="#" class="biz-item" role="menuitem">
+                  <span class="biz-ic"><i class="fa-solid fa-bottle-water"></i></span>
+                  <span class="biz-txt">रेल नीर प्लांट्स</span>
+                </a>
+                <a href="#" class="biz-item" role="menuitem">
+                  <span class="biz-ic"><i class="fa-solid fa-suitcase-rolling"></i></span>
+                  <span class="biz-txt">ट्रैवल एंड टूरिज़्म</span>
+                </a>
+              </div>
+            </li>
+            <li><a href="#">निवेशक</a></li>
+            <li><a href="#">अंतर्दृष्टि</a></li>
+          </ul>
+        </div>
+
+        <div class="nav-center"></div>
+
+        <div class="nav-right">
+          <ul class="menu right">
+            <li><a href="#">सतर्कता</a></li>
+            <li><a href="#">टेंडर्स</a></li>
+            <li><a href="#">फोटो गैलरी</a></li>
+            <li><a href="#">कैरियर</a></li>
+            <li><a href="#">हमसे संपर्क करें</a></li>
+          </ul>
+          <button class="menu-toggle" id="menuToggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+          <div class="login" data-dropdown>
+            <button class="login-btn" type="button">
+              <i class="fa-solid fa-user"></i><span>लॉगिन करें</span><i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <ul class="dropdown">
+              <li><a href="#">सदस्य लॉगिन</a></li>
+              <li><a href="#">कर्मचारी लॉगिन</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <a href="#" class="logo"><img src="images/irctc-logo.svg" alt="IRCTC"></a>
+
+        <div class="mobile-menu">
+          <a href="#">आईआरसीटीसी के बारे में</a>
+          <a href="#">हमारा कारोबार</a>
+          <a href="#">निवेशक</a>
+          <a href="#">अंतर्दृष्टि</a>
+          <a href="#">सतर्कता</a>
+          <a href="#">टेंडर्स</a>
+          <a href="#">फोटो गैलरी</a>
+          <a href="#">कैरियर</a>
+          <a href="#">हमसे संपर्क करें</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== HERO SLIDER ===== -->
+  <section class="hero" id="hero">
+    <div class="slides" id="slides">
+      <div class="slide"><img src="images/banner1.png" alt="Slide 1"></div>
+      <div class="slide"><img src="images/banner2.png" alt="Slide 2"></div>
+      <div class="slide"><img src="images/banner3.png" alt="Slide 3"></div>
+      <div class="slide"><img src="images/banner4.png" alt="Slide 4"></div>
+    </div>
+    <button class="hero-arrow prev" id="prevBtn" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="hero-arrow next" id="nextBtn" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="hero-dots" id="dots"></div>
+  </section>
+
+  <!-- Quick links (fixed right) -->
+  <div class="quick-links">
+    <a href="#"><i class="fa-solid fa-ticket"></i>ई-टिकटिंग</a>
+    <a href="#"><i class="fa-solid fa-train-subway"></i>विशेष<br>ट्रेनें</a>
+    <a href="#"><i class="fa-solid fa-bell-concierge"></i>ई-केटरिंग</a>
+    <a href="#"><i class="fa-solid fa-suitcase-rolling"></i>पर्यटन</a>
+    <a href="#"><i class="fa-solid fa-chart-line"></i>शेयर<br>बाज़ार</a>
+  </div>
+
+  <main>
+
+    <!-- ===================== 1. SERVICES ===================== -->
+    <section class="services">
+      <div class="container">
+        <div class="sec-head center reveal">
+          <p class="eyebrow">सेवाएं</p>
+          <h2 class="sec-title">गंतव्यों को जोड़ना, <span class="hl">यात्राओं को प्रोत्साहन</span></h2>
+          <p class="sec-sub">आधुनिक रेल यात्राओं में आराम और सक्षमता का अनुभव पाइए</p>
+        </div>
+
+        <div class="service-grid">
+          <div class="service-card reveal">
+            <div class="media"><img src="images/seva1.png" alt="ट्रेन टिकट"></div>
+            <span class="icon"><i class="fa-solid fa-train"></i></span>
+            <div class="body">
+              <h3>ट्रेन टिकट</h3>
+              <p>बिना किसी बाधा-रुकावट कॉर्पोरेट रेल यात्रा को बुक करें और उनका प्रबंधन कीजिए, आईआरसीटीसी के समर्पित
+                टिकटिंग समाधानों के साथ।</p>
+              <a href="#" class="more">खोज करें <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="media"><img src="images/seva2.png" alt="बस टिकट"></div>
+            <span class="icon"><i class="fa-solid fa-bus"></i></span>
+            <div class="body">
+              <h3>बस टिकट</h3>
+              <p>आसानी से कॉर्पोरेट बस यात्रा को बुक करें और उनका प्रबंधन कीजिए, आईआरसीटीसी के सुविधाजनक और किफ़ायती
+                समाधानों के साथ।</p>
+              <a href="#" class="more">खोज करें <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="media"><img src="images/seva3.png" alt="एयर टिकट"></div>
+            <span class="icon"><i class="fa-solid fa-plane-departure"></i></span>
+            <div class="body">
+              <h3>एयर टिकट</h3>
+              <p>अपनी हवाई यात्रा को आसान बनाइए, आईआरसीटीसी की झंझट-रहित बुकिंग और प्रबंधन सेवाओं के साथ।</p>
+              <a href="#" class="more">खोज करें <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="media"><img src="images/seva4.png" alt="कैटरिंग"></div>
+            <span class="icon"><i class="fa-solid fa-utensils"></i></span>
+            <div class="body">
+              <h3>कैटरिंग</h3>
+              <p>अपनी यात्राओं के अनुभव को सुखद बनाइए आईआरसीटीसी की प्रीमियम कैटरिंग सेवाओं के साथ, जिसके अंतर्गत यात्रा
+                के दौरान अच्छे खान-पान की सुविधाएं उपलब्ध करायी जाती हैं।</p>
+              <a href="#" class="more">खोज करें <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="media"><img src="images/seva5.png" alt="ट्रैवल एंड टूरिज़्म"></div>
+            <span class="icon"><i class="fa-solid fa-earth-asia"></i></span>
+            <div class="body">
+              <h3>ट्रैवल एंड टूरिज़्म</h3>
+              <p>आपकी आवश्यकताओं के अनुसार बनाए गए ट्रैवल एंड टूरिज़्म पैकेजेज़ के ज़रिए दुनिया देखें, आईआरसीटीसी के
+                झंझट-रहित समाधानों के साथ।</p>
+              <a href="#" class="more">खोज करें <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="media"><img src="images/seva6.png" alt="रेल नीर प्लांट्स"></div>
+            <span class="icon"><i class="fa-solid fa-bottle-water"></i></span>
+            <div class="body">
+              <h3>रेल नीर प्लांट्स</h3>
+              <p>आईआरसीटीसी का रेल नीर, 14 अत्याधुनिक प्लांट्स और उच्च उत्पादन क्षमता के ज़रिए रेल यात्रियों को शुद्ध
+                पैक किया हुआ पीने का पानी उपलब्ध कराता है।</p>
+              <a href="#" class="more">खोज करें <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. ABOUT ===================== -->
+    <section class="about">
+      <div class="container">
+        <div class="about-content reveal">
+          <p class="eyebrow">हमारे बारे में</p>
+          <h2 class="sec-title">इंडियन रेलवे कैटरिंग एंड<br><span class="hl">टूरिज़्म कॉर्पोरेशन लि.</span></h2>
+          <p class="lead">इंडियन रेलवे कैटरिंग एंड टूरिज़्म कॉर्पोरेशन लि. (आईआरसीटीसी) भारत सरकार के रेल मंत्रालय के
+            अंतर्गत एक “मिनी रत्न (कैटेगिरी-I)” केन्द्रीय सार्वजनिक क्षेत्र का उद्यम है। आईआरसीटीसी की स्थापना 27 सितंबर
+            1999 को रेलवे स्टेशनों, रेलों और अन्य स्थानों पर भारतीय रेलवे की खानपान तथा अतिथि सेवाओं की विशेषज्ञता को
+            बढ़ाने और उसका प्रबंधन करने के लिए की गई थी।</p>
+          <div class="stats">
+            <div class="stat"><b>1999</b><span>स्थापना वर्ष</span></div>
+            <div class="stat"><b>मिनी रत्न</b><span>कैटेगिरी-I</span></div>
+            <div class="stat"><b>14</b><span>रेल नीर प्लांट्स</span></div>
+          </div>
+          <a href="#" class="btn btn-primary">अधिक जानकारी <i class="fa-solid fa-arrow-right-long"></i></a>
+        </div>
+
+        <div class="about-visual reveal">
+          <span class="frame"></span>
+          <img class="main-img" src="images/poster1.png" alt="">
+          <div class="badge">
+            <i class="fa-solid fa-award"></i>
+            <div><b>रेल मंत्रालय</b><span>भारत सरकार का उपक्रम</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. NEWS ===================== -->
+    <section class="news">
+      <div class="container">
+        <div class="news-head reveal">
+          <div>
+            <p class="eyebrow">ताजा जानकारी</p>
+            <h2 class="sec-title">नया क्या है</h2>
+            <p class="sec-sub">नए विकास कार्यों की जानकारी पाइए और जो नया हो रहा है उससे अवगत रहिए</p>
+          </div>
+          <a href="#" class="btn btn-ghost">सब देखिए <i class="fa-solid fa-arrow-right-long"></i></a>
+        </div>
+
+        <div class="carousel" data-carousel data-step="1">
+          <div class="carousel-track">
+            <a href="#" class="news-card">
+              <div class="media"><img src="https://picsum.photos/seed/news-train/700/440" alt=""><span
+                  class="tag">विज्ञापन</span></div>
+              <div class="body">
+                <h3>आईआरसीटीसी के साथ विज्ञापन दें।</h3><span class="read">और पढ़ें <i
+                    class="fa-solid fa-arrow-right-long"></i></span>
+              </div>
+            </a>
+            <a href="#" class="news-card">
+              <div class="media"><img src="https://picsum.photos/seed/news-laptop/700/440" alt=""><span
+                  class="tag">सूचना</span></div>
+              <div class="body">
+                <h3>सार्वजनिक सूचना - भर्ती संबंधी धोखा</h3><span class="read">और पढ़ें <i
+                    class="fa-solid fa-arrow-right-long"></i></span>
+              </div>
+            </a>
+            <a href="#" class="news-card">
+              <div class="media"><img src="https://picsum.photos/seed/news-family/700/440" alt=""><span
+                  class="tag">शेयरधारक</span></div>
+              <div class="body">
+                <h3>शेयरधारकों को उनके ईमेल पते आदि के अद्यतन करने का अनुरोध</h3><span class="read">और पढ़ें <i
+                    class="fa-solid fa-arrow-right-long"></i></span>
+              </div>
+            </a>
+            <a href="#" class="news-card">
+              <div class="media"><img src="https://picsum.photos/seed/news-tour/700/440" alt=""><span
+                  class="tag">पर्यटन</span></div>
+              <div class="body">
+                <h3>आईआरसीटीसी पर्यटन पैकेज – नई बुकिंग शुरू</h3><span class="read">और पढ़ें <i
+                    class="fa-solid fa-arrow-right-long"></i></span>
+              </div>
+            </a>
+            <a href="#" class="news-card">
+              <div class="media"><img src="https://picsum.photos/seed/news-food/700/440" alt=""><span
+                  class="tag">कैटरिंग</span></div>
+              <div class="body">
+                <h3>ई-कैटरिंग सेवाओं का विस्तार</h3><span class="read">और पढ़ें <i
+                    class="fa-solid fa-arrow-right-long"></i></span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="slider-dots"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 4. INVESTOR CORNER ===================== -->
+    <section class="invest">
+      <div class="container">
+        <div class="sec-head center reveal">
+          <p class="eyebrow">निवेश</p>
+          <h2 class="sec-title">निवेश कॉर्नर</h2>
+          <p class="sec-sub">पारदर्शी प्रतिभागिताओं के ज़रिए नीतिगत विकास का सशक्तिकरण</p>
+        </div>
+
+        <div class="invest-grid">
+          <div class="invest-col glass reveal">
+            <h3><i class="fa-solid fa-bullhorn"></i>Notices</h3>
+            <div class="notice">
+              <div class="date"><b>04</b><small>नवम्बर 2024</small></div>
+              <div><strong>142 वीं बोर्ड मीटिंग</strong><span>बोर्ड मीटिंग की सूचना</span></div>
+            </div>
+            <div class="notice">
+              <div class="date"><b>13</b><small>अगस्त 2024</small></div>
+              <div><strong>120 वीं बोर्ड मीटिंग</strong><span>बोर्ड मीटिंग की सूचना</span></div>
+            </div>
+            <div class="spacer"></div>
+            <a href="#" class="btn btn-light">अधिक जानकारी <i class="fa-solid fa-arrow-right-long"></i></a>
+          </div>
+
+          <div class="invest-col glass reveal">
+            <h3><i class="fa-solid fa-file-invoice"></i>Annual Report</h3>
+            <div class="notice">
+              <div class="doc"><i class="fa-regular fa-file-pdf"></i></div>
+              <div><strong>2023 - 24</strong><span>प्रस्तुति</span></div>
+            </div>
+            <div class="notice">
+              <div class="doc"><i class="fa-regular fa-file-pdf"></i></div>
+              <div><strong>2022 - 23</strong><span>प्रस्तुति</span></div>
+            </div>
+            <div class="spacer"></div>
+            <a href="#" class="btn btn-light">अधिक जानकारी <i class="fa-solid fa-arrow-right-long"></i></a>
+          </div>
+
+          <!-- <div class="exchanges reveal">
+          <a href="#" class="exchange">
+            <span class="label">BSE<small>IRCTC शेयर</small></span>
+            <span class="divider"></span>
+            <span class="brand"><span class="bse-logo"><i class="fa-solid fa-fire-flame-curved"></i>BSE<small>The Power of Vibrance</small></span></span>
+          </a>
+          <a href="#" class="exchange">
+            <span class="label">NSE<small>IRCTC शेयर</small></span>
+            <span class="divider"></span>
+            <span class="brand"><span class="nse-logo"><span class="mark"></span>NSE</span></span>
+          </a>
+        </div> -->
+
+<div class="exchanges reveal">
+
+  <!-- BSE -->
+  <a href="#" class="exchange">
+    <span class="label">
+      BSE
+      <small>IRCTC शेयर</small>
+    </span>
+
+    <span class="divider"></span>
+
+    <span class="brand">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/5/50/BSE_logo.svg"
+        alt="BSE Logo"
+        class="exchange-logo bse-logo"
+      >
+    </span>
+  </a>
+
+
+  <!-- NSE -->
+  <a href="#" class="exchange">
+    <span class="label">
+      NSE
+      <small>IRCTC शेयर</small>
+    </span>
+
+    <span class="divider"></span>
+
+    <span class="brand">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/c/c5/NSE-logo.jpg"
+        alt="NSE Logo"
+        class="exchange-logo nse-logo"
+      >
+    </span>
+  </a>
+
+</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 5. TESTIMONIALS ===================== -->
+    <section class="testimonials">
+      <div class="container">
+        <div class="sec-head center reveal">
+          <p class="eyebrow">प्रशंसापत्र</p>
+          <h2 class="sec-title">हमारे संतुष्ट ग्राहक <span class="hl">क्या कहते हैं</span></h2>
+          <p class="sec-sub">हमारे प्रसन्न ग्राहकों की आवाज़</p>
+        </div>
+
+        <div class="carousel" data-carousel data-step="page">
+          <div class="carousel-track">
+            <div class="t-card">
+              <i class="fa-solid fa-quote-right q-icon"></i>
+              <div class="stars">★★★★★</div>
+              <p>Exceptional service and punctuality! Our travel experience was smooth and hassle-free. From booking to
+                arrival, everything was handled with professionalism. Highly recommend for anyone seeking reliable and
+                comfortable railway transport!</p>
+              <div class="person"><span class="avatar">SM</span>
+                <div>
+                  <h4>Ms. Sarah Menon</h4><span class="role">रेल यात्री</span>
+                </div>
+              </div>
+            </div>
+            <div class="t-card">
+              <i class="fa-solid fa-quote-right q-icon"></i>
+              <div class="stars">★★★★★</div>
+              <p>Reliable and comfortable journeys every time. This company sets the standard for railway travel. Their
+                attention to detail, on-time performance, and courteous staff make each trip pleasant and stress-free.
+              </p>
+              <div class="person"><span class="avatar">SS</span>
+                <div>
+                  <h4>Ms. Shakti Sharma</h4><span class="role">रेल यात्री</span>
+                </div>
+              </div>
+            </div>
+            <div class="t-card">
+              <i class="fa-solid fa-quote-right q-icon"></i>
+              <div class="stars">★★★★★</div>
+              <p>Traveling with this Indian railway is always a pleasure. Efficient scheduling, excellent customer
+                service, and well-maintained trains ensure a top-notch experience every time. Highly recommended for a
+                worry-free trip!</p>
+              <div class="person"><span class="avatar">VR</span>
+                <div>
+                  <h4>Mr. Venkat Rajguru</h4><span class="role">रेल यात्री</span>
+                </div>
+              </div>
+            </div>
+            <div class="t-card">
+              <i class="fa-solid fa-quote-right q-icon"></i>
+              <div class="stars">★★★★★</div>
+              <p>The e-catering service was a delight. Fresh, hot food delivered right to my seat on time. Booking was
+                simple and the staff were very polite throughout the journey.</p>
+              <div class="person"><span class="avatar">AP</span>
+                <div>
+                  <h4>Mr. Arjun Patel</h4><span class="role">ई-कैटरिंग</span>
+                </div>
+              </div>
+            </div>
+            <div class="t-card">
+              <i class="fa-solid fa-quote-right q-icon"></i>
+              <div class="stars">★★★★★</div>
+              <p>Our family tour package was planned perfectly. Hotels, sightseeing and train travel were all well
+                coordinated. A truly memorable and comfortable holiday.</p>
+              <div class="person"><span class="avatar">PN</span>
+                <div>
+                  <h4>Ms. Priya Nair</h4><span class="role">पर्यटन पैकेज</span>
+                </div>
+              </div>
+            </div>
+            <div class="t-card">
+              <i class="fa-solid fa-quote-right q-icon"></i>
+              <div class="stars">★★★★★</div>
+              <p>Booking tickets has never been easier. The website is quick, the process is transparent and customer
+                support resolved my query within minutes.</p>
+              <div class="person"><span class="avatar">RV</span>
+                <div>
+                  <h4>Mr. Rohit Verma</h4><span class="role">ई-टिकटिंग</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slider-dots"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. CAREERS ===================== -->
+    <section class="careers">
+      <div class="container">
+        <div class="careers-box reveal">
+          <div class="careers-text">
+            <p class="eyebrow">कैरियर्स</p>
+            <h2 class="sec-title">हमारे सफ़र में <span class="hl">हमसफ़र बनिए</span></h2>
+            <p class="sec-sub">हमारी ऊर्जावान टीम का हिस्सा बनकर अपने कैरियर को आगे बढ़ाइए</p>
+            <div class="perks">
+              <span><i class="fa-solid fa-circle-check"></i>विकास के अवसर</span>
+              <span><i class="fa-solid fa-circle-check"></i>सहयोगी टीम</span>
+              <span><i class="fa-solid fa-circle-check"></i>राष्ट्र सेवा</span>
+            </div>
+            <a href="#" class="btn btn-amber">हमारी टीम में शामिल हो जाइए <i
+                class="fa-solid fa-arrow-right-long"></i></a>
+          </div>
+
+          <div class="photo-grid">
+            <div class="photo-col c1">
+              <img src="https://picsum.photos/seed/career-track/400/300" alt="">
+              <img src="https://picsum.photos/seed/career-chef/400/500" alt="">
+            </div>
+            <div class="photo-col c2">
+              <img src="https://picsum.photos/seed/career-office/400/300" alt="">
+              <img src="https://picsum.photos/seed/career-staff/400/300" alt="">
+            </div>
+            <div class="photo-col c3">
+              <img src="https://picsum.photos/seed/career-support/400/550" alt="">
+              <img src="https://picsum.photos/seed/career-driver/400/300" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 7. PARTNER LOGOS ===================== -->
+    <section class="partners">
+      <div class="container">
+        <p class="label">उपयोगी सरकारी लिंक</p>
+        <div class="logo-row">
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Swachh_Bharat_Mission_Logo.svg?utm_source=bh.wikipedia.org&utm_campaign=index&utm_content=original"
+              alt="स्वच्छ भारत"></a>
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Incredible_India_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+              alt="Incredible India"></a>
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Indiagovin.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+              alt="india.gov.in"></a>
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/hi/7/7b/Indian_Railways_logo.png?utm_source=hi.wikipedia.org&utm_campaign=index&utm_content=original"
+              alt="Indian Railways"></a>
+          <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Mygov.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+              alt="MyGov"></a>
+          <a href="#"><img src="https://placehold.co/160x70/ffffff/0d2b5e/png?text=CVC&font=poppins"
+              alt="Central Vigilance Commission"></a>
+          <a href="#"><img src="https://placehold.co/160x70/ffffff/0d2b5e/png?text=Digital+India&font=poppins"
+              alt="Digital India"></a>
+          <a href="#"><img src="https://placehold.co/160x70/ffffff/0d2b5e/png?text=Make+in+India&font=poppins"
+              alt="Make in India"></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. CAUTION ===================== -->
+    <section class="caution">
+      <div class="container">
+        <div class="caution-box reveal">
+          <div class="caution-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div>
+            <h3>Caution!</h3>
+            <p>हमारे ध्यान में यह आया है कि सोशल मीडिया प्लेटफ़ॉर्म्स पर उपयोगकर्ताओं को ऐसे ग्रुप्स या चैनल्स में शामिल
+              होने के लिए आमंत्रित किया जा रहा है, जो ऑनलाइन रेलवे बुकिंग और अन्य संबंधित सेवाओं की पुष्टि करने का दावा
+              करते हैं। ऐसे ग्रुप्स अक्सर उपयोगकर्ताओं को धोखा देने के उद्देश्य से बनाए जाते हैं। हम सभी ग्राहकों से
+              विनती करते हैं कि वे सतर्क रहें और ऐसी धोखाधड़ी से बचें। ऑनलाइन रेलवे बुकिंग और ट्रेन में ऑनलाइन फूड सेवा
+              से संबंधित किसी भी प्रश्न या सहायता के लिए कृपया आईआरसीटीसी कस्टमर केयर से संपर्क करें।</p>
+            <p>आपके निरंतर समर्थन के लिए धन्यवाद, क्योंकि हम मूल्यवान सेवाओं को विकसित और प्रदान करते रहते हैं।
+              आईआरसीटीसी आपके रेलवे बुकिंग ऑनलाइन अनुभव को सुरक्षित, संरक्षित और सहज बनाने के लिए प्रतिबद्ध है।</p>
+            <span class="hotline"><i class="fa-solid fa-headset"></i>कस्टमर केयर: 14646</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== 9. CONNECT ===================== -->
+  <footer>
+    <section class="connect">
+      <div class="container">
+        <div class="connect-col left">
+          <h3>हमसे जुड़िए</h3>
+          <p>आज ही हमसे जुड़िए और नवीनतम अपडेट्स तथा अवसरों की जानकारी पाइए।</p>
+          <div class="socials">
+            <a href="#" class="fb" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="ig" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="x" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="yt" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" class="in" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="connect-col right">
+          <h3>हमसे संपर्क करें</h3>
+          <p>हम आपके साथ हैं: हमसे कभी भी जुड़िए, हम आपसे बस एक कॉल या क्लिक की दूरी पर हैं।</p>
+          <a href="#" class="btn btn-amber">हमसे संपर्क करें <i class="fa-solid fa-arrow-right-long"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 10. BOTTOM FOOTER ===================== -->
+    <section class="bottom-footer">
+      <div class="container">
+        <div class="footer-left">
+          <div class="footer-links">
+            <a href="#">आईआरसीटीसी के बारे में</a>
+            <a href="#">अंतर्दृष्टि</a>
+            <a href="#">फोटो गैलरी</a>
+            <a href="#">साइट का नक्शा</a>
+            <a href="#">हमारा कारोबार</a>
+            <a href="#">सतर्कता</a>
+            <a href="#">कैरियर</a>
+            <a href="#">गोपनीयता नीति</a>
+            <a href="#">निवेशक</a>
+            <a href="#">टेंडर्स</a>
+            <a href="#">हमसे संपर्क करें</a>
+          </div>
+          <div class="counter">
+            <div class="bars"><span></span><span></span><span></span></div>
+            <span class="label">विज़िटर्स</span>
+            <div class="digits">29810147</div>
+          </div>
+          <p class="copyright">© Copyright 2024 IRCTC | CIN : L74899DL1999GOI101707 | All Rights Reserved</p>
+        </div>
+        <div class="footer-train">
+          <img src="images/footer.png" alt="">
+        </div>
+      </div>
+    </section>
+  </footer>
+
+  <script>
+    // ===== Hero slider =====
+    (function () {
+      var hero = document.getElementById('hero');
+      var track = document.getElementById('slides');
+      var total = track.children.length;
+      var dotsEl = document.getElementById('dots');
+      var index = 0, timer;
+
+      for (var i = 0; i < total; i++) {
+        var b = document.createElement('button');
+        b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        b.dataset.i = i;
+        b.addEventListener('click', function () { go(+this.dataset.i); restart(); });
+        dotsEl.appendChild(b);
+      }
+      function go(n) {
+        index = (n + total) % total;
+        track.style.transform = 'translateX(' + (-index * 100) + '%)';
+        [].forEach.call(dotsEl.children, function (d, k) { d.classList.toggle('active', k === index); });
+      }
+      function start() { timer = setInterval(function () { go(index + 1); }, 5000); }
+      function stop() { clearInterval(timer); }
+      function restart() { stop(); start(); }
+
+      document.getElementById('prevBtn').addEventListener('click', function () { go(index - 1); restart(); });
+      document.getElementById('nextBtn').addEventListener('click', function () { go(index + 1); restart(); });
+      hero.addEventListener('mouseenter', stop);
+      hero.addEventListener('mouseleave', start);
+
+      var startX = null;
+      hero.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; stop(); }, { passive: true });
+      hero.addEventListener('touchend', function (e) {
+        if (startX === null) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+        startX = null; start();
+      });
+      go(0); start();
+    })();
+
+    // ===== Card carousels (News + Testimonials) =====
+    document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
+      var track = carousel.querySelector('.carousel-track');
+      var cards = track.children;
+      var dotsEl = carousel.nextElementSibling;
+      var byPage = carousel.dataset.step === 'page';
+      var page = 0, pages = 1, perView = 1, timer;
+
+      function measure() {
+        var cardW = cards[0].getBoundingClientRect().width;
+        var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        var pad = parseFloat(getComputedStyle(carousel).paddingLeft) * 2;
+        perView = Math.max(1, Math.round((carousel.clientWidth - pad + gap) / (cardW + gap)));
+        pages = byPage ? Math.ceil(cards.length / perView) : Math.max(1, cards.length - perView + 1);
+
+        dotsEl.innerHTML = '';
+        for (var i = 0; i < pages; i++) {
+          var b = document.createElement('button');
+          b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+          b.dataset.i = i;
+          b.addEventListener('click', function () { go(+this.dataset.i); restart(); });
+          dotsEl.appendChild(b);
+        }
+        go(Math.min(page, pages - 1));
+      }
+      function go(n) {
+        page = (n + pages) % pages;
+        var first = byPage ? Math.min(page * perView, cards.length - perView) : page;
+        var target = cards[Math.max(0, first)];
+        track.style.transform = 'translateX(' + (-(target.offsetLeft - cards[0].offsetLeft)) + 'px)';
+        [].forEach.call(dotsEl.children, function (d, k) { d.classList.toggle('active', k === page); });
+      }
+      function start() { timer = setInterval(function () { go(page + 1); }, 5000); }
+      function stop() { clearInterval(timer); }
+      function restart() { stop(); start(); }
+
+      carousel.addEventListener('mouseenter', stop);
+      carousel.addEventListener('mouseleave', start);
+
+      var sx = null;
+      carousel.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; stop(); }, { passive: true });
+      carousel.addEventListener('touchend', function (e) {
+        if (sx === null) return;
+        var dx = e.changedTouches[0].clientX - sx;
+        if (Math.abs(dx) > 40) go(page + (dx < 0 ? 1 : -1));
+        sx = null; start();
+      });
+
+      var rt;
+      window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(measure, 150); });
+      measure(); start();
+    });
+
+    // ===== Dropdowns =====
+    document.querySelectorAll('[data-dropdown]').forEach(function (dd) {
+      dd.querySelector('button').addEventListener('click', function (e) {
+        e.stopPropagation();
+        document.querySelectorAll('[data-dropdown].open').forEach(function (o) { if (o !== dd) o.classList.remove('open'); });
+        dd.classList.toggle('open');
+      });
+    });
+    document.addEventListener('click', function () {
+      document.querySelectorAll('[data-dropdown].open').forEach(function (o) { o.classList.remove('open'); });
+    });
+    document.getElementById('menuToggle').addEventListener('click', function () {
+      document.getElementById('mainNav').classList.toggle('mobile-open');
+    });
+
+    // ===== Reveal on scroll =====
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { threshold: .12 });
+      els.forEach(function (el, i) { el.style.transitionDelay = (i % 3) * 80 + 'ms'; io.observe(el); });
+    })();
+    // ===== Sticky header: keep only the nav visible =====
+    (function () {
+      var header = document.querySelector('.site-header');
+      var nav = document.querySelector('.nav-wrap');
+      var gap = 12; // px visible above the nav when stuck (logo shrinks to fit, see .scrolled .logo)
+
+      function setTop() { header.style.top = -(nav.offsetTop - gap) + 'px'; }
+      function onScroll() { header.classList.toggle('scrolled', window.scrollY > nav.offsetTop - gap); }
+
+      setTop(); onScroll();
+      window.addEventListener('resize', function () { setTop(); onScroll(); });
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+  </script>
+
+</body>
+
+</html>
